@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランダムな画像の表示</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0; /* 背景色を調整する場合 */
+            font-size: 4em;
+            font-family: Arial, sans-serif;
+        }
+        #image-container img {
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container"></div>
+
+    <script>
+        const images = [
+            "images/segment_09.png",
+            "images/segment_10.png",
+            "images/segment_11.png",
+            "images/segment_12.png",
+            "images/segment_13.png",
+            "images/segment_14.png",
+            "images/segment_15.png",
+            "images/segment_16.png"
+        ];
+        let remainingImages = [...images]; // 元のリストをコピー
+        let index = 0;
+
+        function displayImage() {
+            const container = document.getElementById("image-container");
+            container.innerHTML = ""; // 既存の画像をクリア
+
+            if (remainingImages.length === 0) {
+                container.textContent = "終了！"; // 統一された終了メッセージ
+                clearInterval(intervalId); // タイマーを停止
+                return;
+            }
+
+            // ランダムなインデックスを取得
+            index = Math.floor(Math.random() * remainingImages.length);
+            // 新しい画像を作成
+            const img = document.createElement("img");
+            img.src = remainingImages[index];
+            img.alt = `Image ${index + 1}`;
+            container.appendChild(img);
+            // 使用済みの画像をリストから削除
+            remainingImages.splice(index, 1);
+        }
+
+        // 最初の画像を表示し、1秒ごとに更新
+        displayImage();
+        const intervalId = setInterval(displayImage, 1000);
+    </script>
+</body>
+</html>
