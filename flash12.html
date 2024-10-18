@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瞬読トレーニング</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-size: 2em;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #text-container {
+            max-width: 90vw;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="text-container"></div>
+
+    <script>
+        const texts = [
+            "私は他人の評価に左右されず、自分の価値を知っています。",
+            "私は他人と比較することなく、自分のペースで成長しています。",
+            "フィードバックは、私が成長するための贈り物です。",
+            "私は私のままで十分であり、他人の期待に応える必要はありません。",
+            "私はSNSを用いた副業で成功しつつあります。",
+            "私はお金を感謝と共に受け取り、そして送り出します。"
+        ];
+
+        // 配列をシャッフルする関数
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        let shuffledTexts = shuffle([...texts]); // シャッフルした配列
+        let index = 0;
+
+        function displayText() {
+            const container = document.getElementById("text-container");
+            // テキストを表示
+            if (index < shuffledTexts.length) {
+                container.textContent = shuffledTexts[index];
+                index++;
+            } else {
+                index = 0; // ループ再生
+                shuffledTexts = shuffle([...texts]); // 再びシャッフル
+                container.textContent = shuffledTexts[index];
+                index++;
+            }
+        }
+
+        // 2秒ごとにテキストを更新
+        setInterval(displayText, 1000); // 2秒ごとに更新
+        displayText(); // 最初のテキストを表示
+    </script>
+</body>
+</html>
