@@ -15,6 +15,7 @@
             font-size: 2em;
             font-family: Arial, sans-serif;
             text-align: center;
+            overflow: hidden; /* スクロールバーが見えないように隠す */
         }
         #text-container {
             max-width: 90vw;
@@ -66,18 +67,17 @@
 
         // preventScreenLock 関数でページを少しスクロールしてスクリーンロックを防止
         let scrollDirection = 1;
-
         function preventScreenLock() {
             window.scrollBy(0, scrollDirection); // 少し上下にスクロール
             scrollDirection *= -1; // 次は逆方向にスクロール
         }
 
-        // 2秒ごとにテキストを更新
+        // テキストの表示を2秒ごとに更新
         setInterval(displayText, 2000); // 2秒ごとに更新
         displayText(); // 最初のテキストを表示
 
-        // 1分ごとにスクリーンロック防止を実行
-        setInterval(preventScreenLock, 60000); // 1分ごとにスクロール
+        // 5秒ごとにスクロールを行ってスクリーンロックを防止
+        setInterval(preventScreenLock, 5000); // 5秒ごとに少しだけスクロール
     </script>
 </body>
 </html>
