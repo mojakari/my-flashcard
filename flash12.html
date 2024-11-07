@@ -22,6 +22,7 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
     </style>
 </head>
@@ -49,6 +50,7 @@
 
         let shuffledTexts = shuffle([...texts]); // シャッフルした配列
         let index = 0;
+        let intervalId;
 
         function displayText() {
             const container = document.getElementById("text-container");
@@ -63,6 +65,30 @@
                 index++;
             }
         }
+
+        // カーソル揺らしを開始する関数
+        function startCursorShake(event) {
+            const container = event.target;
+            const shakeIntensity = 2; // 揺らしの強さ（ピクセル）
+            const shakeSpeed = 50; // 揺らしの速さ（ミリ秒）
+
+            intervalId = setInterval(() => {
+                const offsetX = Math.random() * shakeIntensity - shakeIntensity / 2;
+                const offsetY = Math.random() * shakeIntensity - shakeIntensity / 2;
+                container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            }, shakeSpeed);
+        }
+
+        // カーソル揺らしを停止する関数
+        function stopCursorShake(event) {
+            clearInterval(intervalId);
+            event.target.style.transform = "translate(0, 0)";
+        }
+
+        // マウスイベントリスナーを追加
+        const container = document.getElementById("text-container");
+        container.addEventListener("mouseenter", startCursorShake); // マウスが乗ったとき
+        container.addEventListener("mouseleave", stopCursorShake); // マウスが外れたとき
 
         // 2秒ごとにテキストを更新
         setInterval(displayText, 2000); // 2秒ごとに更新
