@@ -22,7 +22,6 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
         }
     </style>
 </head>
@@ -50,7 +49,6 @@
 
         let shuffledTexts = shuffle([...texts]); // シャッフルした配列
         let index = 0;
-        let intervalId;
 
         function displayText() {
             const container = document.getElementById("text-container");
@@ -66,33 +64,20 @@
             }
         }
 
-        // カーソル揺らしを開始する関数
-        function startCursorShake(event) {
-            const container = event.target;
-            const shakeIntensity = 2; // 揺らしの強さ（ピクセル）
-            const shakeSpeed = 50; // 揺らしの速さ（ミリ秒）
+        // preventScreenLock 関数でページを少しスクロールしてスクリーンロックを防止
+        let scrollDirection = 1;
 
-            intervalId = setInterval(() => {
-                const offsetX = Math.random() * shakeIntensity - shakeIntensity / 2;
-                const offsetY = Math.random() * shakeIntensity - shakeIntensity / 2;
-                container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-            }, shakeSpeed);
+        function preventScreenLock() {
+            window.scrollBy(0, scrollDirection); // 少し上下にスクロール
+            scrollDirection *= -1; // 次は逆方向にスクロール
         }
-
-        // カーソル揺らしを停止する関数
-        function stopCursorShake(event) {
-            clearInterval(intervalId);
-            event.target.style.transform = "translate(0, 0)";
-        }
-
-        // マウスイベントリスナーを追加
-        const container = document.getElementById("text-container");
-        container.addEventListener("mouseenter", startCursorShake); // マウスが乗ったとき
-        container.addEventListener("mouseleave", stopCursorShake); // マウスが外れたとき
 
         // 2秒ごとにテキストを更新
         setInterval(displayText, 2000); // 2秒ごとに更新
         displayText(); // 最初のテキストを表示
+
+        // 1分ごとにスクリーンロック防止を実行
+        setInterval(preventScreenLock, 60000); // 1分ごとにスクロール
     </script>
 </body>
 </html>
